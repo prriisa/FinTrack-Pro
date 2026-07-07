@@ -16,11 +16,11 @@ function addTask(data) {
         let dataDiv = document.querySelector(`.data.${obj.category}`);
         if (dataDiv) {
             dataDiv.innerHTML += `
-                    <div class="task-div ${obj.date}">
+                    <div class="task-div ${obj.date}" data-index="${index}">
                         <div class="checkbox">
-                            <div class="checkbox-tick ${obj.important}"></div>
+                            <div class="checkbox-tick" style="display: ${obj.checkBox ? 'block' : 'none'}"></div>
                         </div>
-                        <p>${obj.task}</p>
+                        <p style="text-decoration: ${obj.checkBox ? 'line-through' : 'none'}">${obj.task}</p>
                         <div class="description">${obj.discription}</div>
                         <div class="dlt" data-index="${index}"><i class="ri-delete-bin-fill" style="color:rgb(38, 38, 38)"></i></div>
                     </div>`
@@ -29,11 +29,11 @@ function addTask(data) {
             taskContainer.innerHTML += `
                 <div class="data ${obj.category}">
                     <h6>${obj.category}</h6>
-                    <div class="task-div ${obj.date}">
+                    <div class="task-div ${obj.date}" data-index="${index}">
                         <div class="checkbox">
-                            <div class="checkbox-tick ${obj.important}"></div>
+                            <div class="checkbox-tick ${obj.important}" style="display: ${obj.checkBox ? 'block' : 'none'}"></div>
                         </div>
-                        <p>${obj.task}</p>
+                        <p style="text-decoration: ${obj.checkBox ? 'line-through' : 'none'}">${obj.task}</p>
                         <div class="description">${obj.discription}</div>
                         <div class="dlt" data-index="${index}"><i class="ri-delete-bin-fill" style="color:rgb(38, 38, 38)"></i></div>
                     </div>
@@ -84,6 +84,7 @@ form.addEventListener('submit', function (e) {
         discription: taskDisc.value,
         category: category.value,
         date: date.value,
+        checkBox: false,
         important: important.value
     })
 
@@ -109,10 +110,15 @@ taskContainer.addEventListener('click', function (e) {
     }
 
     if (e.target.closest('.checkbox')) {
-        let taskDiv = e.target.closest('.task-div');
-        let tick = taskDiv.querySelector('.checkbox-tick');
-        let task = taskDiv.querySelector('p');
-        task.style.textDecoration = task.style.textDecoration === "line-through" ? "none" : "line-through";
-        tick.style.display = tick.style.display === "block" ? "none" : "block";
+
+        const taskDiv = e.target.closest('.task-div');
+        const index = Number(taskDiv.dataset.index);
+
+        data[index].checkBox = !data[index].checkBox;
+
+        localStorage.setItem("data", JSON.stringify(data));
+
+        addTask(data);
+        addDate(data);
     }
 })

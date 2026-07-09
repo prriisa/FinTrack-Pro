@@ -541,7 +541,7 @@ function addGoals() {
 
     dailyGoalsData.forEach((data, goalIndex) => {
         dailyGoalsContainer.innerHTML += `
-                    <div class="daily-goals-div" data-index="${index}" data-goal-index="${goalIndex}" style="background-color: ${data.checkBox ? 'transparent' : pastelColors[index]}; opacity : ${data.checkBox ? 0.2 : 1};">
+                    <div class="daily-goals-div" data-index="${index}" data-goal-index="${goalIndex}" style="background-color: ${data.checkBox ? '#e5e8ed' : pastelColors[index]}; opacity : ${data.checkBox ? 0.2 : 1};">
                         <h1 style="text-decoration: ${data.checkBox ? 'line-through' : 'none'};">${data.heading}</h1>
                         <p>${data.paragraph}</p>
                         <div class="goal-dlt" data-goal-index="${goalIndex}"><i class="ri-delete-bin-fill"></i></div>
@@ -588,7 +588,7 @@ dailyGoalsContainer.addEventListener('click', (e) => {
         box.innerHTML = `
             <form>
                 <input type="text" class="heading" placeholder="Enter Task Heading">
-                <input type="text" class="discription" placeholder="Enter Task Description">
+                <textarea type="text" class="discription" placeholder="Enter Task Description"></textarea>
                 <button type="submit">ADD TASK</button>
                 <button type="button" class="cancel-btn">Cancel</button>
             </form>`
